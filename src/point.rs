@@ -51,12 +51,12 @@ where
 impl Point<i64> {
     pub fn orient(self, b: Self, c: Self) -> i8 {
         let res = (b - self).cross(c - self);
-        if res > 0 {
-            1
-        } else if res < 0 {
-            -1
-        } else {
-            0
+
+        use std::cmp::Ordering::*;
+        match res.cmp(&0) {
+            Less => -1,
+            Equal => 0,
+            Greater => 1,
         }
     }
 }

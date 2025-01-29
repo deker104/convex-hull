@@ -13,6 +13,10 @@ To add this library to your project just add it as a dependency to your `Cargo.t
 convex-hull = "0.1"
 ```
 
+## Documentation
+
+Project documantation can be accessed by running `cargo doc --open` in the cloned repository. There are several documents in the `docs` directory that contains technical documentation of the project in Russian.
+
 ## Contributing
 
 If you want to contribute to this project, please follow these steps:

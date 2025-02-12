@@ -1,6 +1,6 @@
 use std::ops::{Add, Mul, Sub};
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Point<T> {
     pub x: T,
     pub y: T,
@@ -37,7 +37,7 @@ where
     T: Copy,
     T: Add<Output = T>,
     T: Mul<Output = T>,
-    T: Sub<Output = T>
+    T: Sub<Output = T>,
 {
     pub fn dot(self, other: Self) -> T {
         self.x * other.x + self.y * other.y
@@ -48,30 +48,42 @@ where
     }
 }
 
-impl Point<i64> {
-    pub fn orient(self, b: Self, c: Self) -> i8 {
+pub enum Orientation {
+    CounterClockwise,
+    Clockwise,
+    None,
+}
+
+pub trait Orient {
+    fn orient(self, b: Self, c: Self) -> Orientation;
+}
+
+impl Orient for Point<i64> {
+    fn orient(self, b: Self, c: Self) -> Orientation {
         let res = (b - self).cross(c - self);
 
+        use Orientation::*;
         use std::cmp::Ordering::*;
         match res.cmp(&0) {
-            Less => -1,
-            Equal => 0,
-            Greater => 1,
+            Less => Clockwise,
+            Equal => None,
+            Greater => CounterClockwise,
         }
     }
 }
 
-impl Point<f64> {
-    const EPSILON: f64 = 1e-9;
+impl Orient for Point<f64> {
+    fn orient(self, b: Self, c: Self) -> Orientation {
+        const EPSILON: f64 = 1e-9;
 
-    pub fn orient(self, b: Self, c: Self) -> i8 {
         let res = (b - self).cross(c - self);
-        if res > Self::EPSILON {
-            1
-        } else if res < -Self::EPSILON {
-            -1
+        use Orientation::*;
+        if res > EPSILON {
+            CounterClockwise
+        } else if res < -EPSILON {
+            Clockwise
         } else {
-            0
+            None
         }
     }
 }

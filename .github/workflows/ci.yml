@@ -27,3 +27,6 @@ jobs:
 
       - name: Run clippy
         run: cargo clippy --verbose
+
+      - name: Run benchmarks
+        run: cargo bench --verbose

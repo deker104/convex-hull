@@ -30,3 +30,9 @@ jobs:
 
       - name: Run benchmarks
         run: cargo bench --verbose
+
+      - name: Install valgrind
+        run: sudo apt-get install -y valgrind
+
+      - name: Run benchmarks with memory profiling
+        run: valgrind --tool=massif cargo bench --verbose

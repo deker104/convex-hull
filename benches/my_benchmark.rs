@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use convex_hull::{ConvexHullSolver, Point};
-use convex_hull::algorithms::{BruteForce}; // Импортируем все алгоритмы
+use convex_hull::algorithms::bruteforce::BruteForce; // Импортируем все алгоритмы
 
 // Генерация случайных точек
 fn generate_random_points(n: usize) -> Vec<Point<f64>> {

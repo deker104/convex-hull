@@ -35,7 +35,7 @@ jobs:
         run: cargo bench --no-run
 
       - name: Find benchmark binary
-        run: echo "BENCH_BINARY=$(ls target/release/deps/my_benchmark-*)" >> $GITHUB_ENV
+        run: echo "BENCH_BINARY=$(find target/release/deps/ -type f -executable -name 'my_benchmark-*' | head -n 1)" >> $GITHUB_ENV
 
       - name: Run benchmarks with memory profiling
         run: |

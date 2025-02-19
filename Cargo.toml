@@ -5,6 +5,7 @@ edition = "2024"
 
 [dev-dependencies]
 criterion = "0.5"
+rand = "0.8"
 
 [[bench]]
 name = "my_benchmark"

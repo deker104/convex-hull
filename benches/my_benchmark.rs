@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use convex_hull::{ConvexHullSolver, Point};
-use convex_hull::algorithms::bruteforce::BruteForce; // Импортируем все алгоритмы
+use convex_hull::algorithms::{bruteforce::BruteForce, andrew::Andrew}; // Алгоритмы
 
 // Генерация случайных точек
 fn generate_random_points(n: usize) -> Vec<Point<f64>> {
@@ -30,10 +30,15 @@ fn benchmark_bruteforce(c: &mut Criterion) {
     benchmark_algorithm(c, "bruteforce", BruteForce::new());
 }
 
+fn benchmark_andrew(c: &mut Criterion) {
+    benchmark_algorithm(c, "andrew", Andrew::new());ю
+}
+
 // Группа бенчмарков
 criterion_group!(
     benches,
-    benchmark_bruteforce
+    benchmark_bruteforce,
+    benchmark_andrew // Добавляем новый бенчмарк в группу
 );
 
 // Главная функция для запуска бенчмарков

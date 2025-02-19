@@ -28,11 +28,14 @@ jobs:
       - name: Run clippy
         run: cargo clippy --verbose
 
-      - name: Run benchmarks
-        run: cargo bench --verbose
-
       - name: Install valgrind
         run: sudo apt-get install -y valgrind
 
       - name: Run benchmarks with memory profiling
-        run: valgrind --tool=massif cargo bench --verbose
+        run: |
+          valgrind --tool=massif --stacks=yes cargo bench --verbose
+          ms_print massif.out.* > memory_report.txt
+          cat memory_report.txt
+
+      - name: Run benchmarks (without Valgrind)
+        run: cargo bench --verbose

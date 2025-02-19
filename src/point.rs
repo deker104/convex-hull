@@ -48,6 +48,7 @@ where
     }
 }
 
+#[derive(PartialEq)]
 pub enum Orientation {
     CounterClockwise,
     Clockwise,

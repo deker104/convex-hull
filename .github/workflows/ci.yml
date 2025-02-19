@@ -34,6 +34,7 @@ jobs:
       - name: Run benchmarks with memory profiling
         run: |
           valgrind --tool=massif --stacks=yes cargo bench --verbose
+          ls -l massif.out.*
           ms_print massif.out.* > memory_report.txt
           cat memory_report.txt
 

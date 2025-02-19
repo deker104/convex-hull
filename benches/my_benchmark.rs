@@ -31,7 +31,7 @@ fn benchmark_bruteforce(c: &mut Criterion) {
 }
 
 fn benchmark_andrew(c: &mut Criterion) {
-    benchmark_algorithm(c, "andrew", Andrew::new());ю
+    benchmark_algorithm(c, "andrew", Andrew::new());
 }
 
 // Группа бенчмарков

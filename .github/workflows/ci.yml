@@ -31,12 +31,22 @@ jobs:
       - name: Install valgrind
         run: sudo apt-get install -y valgrind
 
+      - name: Build benchmarks
+        run: cargo bench --no-run
+
+      - name: Find benchmark binary
+        run: echo "BENCH_BINARY=$(ls target/release/deps/my_benchmark-*)" >> $GITHUB_ENV
+
       - name: Run benchmarks with memory profiling
         run: |
-          valgrind --tool=massif --stacks=yes cargo bench --verbose
-          ls -l massif.out.*
-          ms_print massif.out.* > memory_report.txt
-          cat memory_report.txt
+          valgrind --tool=massif --stacks=yes --massif-out-file=massif.out $BENCH_BINARY
+          if [ -f massif.out ]; then
+            ms_print massif.out > memory_report.txt
+            cat memory_report.txt
+          else
+            echo "Massif output file not found!"
+            exit 1
+          fi
 
       - name: Run benchmarks (without Valgrind)
         run: cargo bench --verbose

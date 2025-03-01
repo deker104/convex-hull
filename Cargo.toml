@@ -3,6 +3,9 @@ name = "convex-hull"
 version = "0.1.0"
 edition = "2024"
 
+[dependencies]
+num-traits = "0.2"
+
 [dev-dependencies]
 criterion = "0.5"
 rand = "0.8"

@@ -52,7 +52,7 @@ where
     T: Copy + PartialOrd + Sub<Output = T> + Mul<Output = T> + Add<Output = T> + Zero,
 {
     fn solve(&self, points: impl IntoIterator<Item = Point<T>>) -> ConvexHull<T> {
-        let mut points: Vec<Point<T>> = points.into_iter().collect();
+        let points: Vec<Point<T>> = points.into_iter().collect();
         if points.len() <= 3 {
             return ConvexHull::from_iter(points);
         }

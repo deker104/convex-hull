@@ -51,8 +51,8 @@ criterion_group!(
     benches,
     benchmark_bruteforce,
     benchmark_andrew,
-    benchmark_graham, // Добавляем новый бенчмарк в группу
-    benchmark_quickhull
+    benchmark_graham,
+    benchmark_quickhull,
     benchmark_jarvis
 );
 

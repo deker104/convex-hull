@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use convex_hull::{ConvexHullSolver, Point};
-use convex_hull::algorithms::{bruteforce::BruteForce, andrew::Andrew, quickhull::QuickHull}; // Алгоритмы
+use convex_hull::algorithms::{bruteforce::BruteForce, andrew::Andrew, graham::Graham, quickhull::QuickHull}; // Алгоритмы
 
 // Генерация случайных точек
 fn generate_random_points(n: usize) -> Vec<Point<f64>> {
@@ -34,6 +34,10 @@ fn benchmark_andrew(c: &mut Criterion) {
     benchmark_algorithm(c, "andrew", Andrew::new());
 }
 
+fn benchmark_graham(c: &mut Criterion) {
+    benchmark_algorithm(c, "graham", Graham::new());
+}
+
 fn benchmark_quickhull(c: &mut Criterion) {
     benchmark_algorithm(c, "quickhull", QuickHull::new());
 }
@@ -42,7 +46,8 @@ fn benchmark_quickhull(c: &mut Criterion) {
 criterion_group!(
     benches,
     benchmark_bruteforce,
-    benchmark_andrew, // Добавляем новый бенчмарк в группу
+    benchmark_andrew,
+    benchmark_graham, // Добавляем новый бенчмарк в группу
     benchmark_quickhull
 );
 

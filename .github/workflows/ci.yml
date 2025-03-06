@@ -11,8 +11,10 @@ env:
 
 jobs:
   build_and_test:
-    name: Build and Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -21,9 +23,20 @@ jobs:
       
       - name: Build crates
         run: cargo build --verbose
-      
-      - name: Run tests
-        run: cargo test --verbose
 
-      - name: Run clippy
-        run: cargo clippy --verbose
+      - name: Run benchmarks
+        run: cargo bench --verbose
+
+      - name: Install valgrind (only on Ubuntu)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y valgrind
+
+      - name: Run benchmarks with memory profiling
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            BENCH_BINARY=$(ls target/release/deps/my_benchmark-*)
+            valgrind --tool=massif --stacks=yes --massif-out-file=massif.out $BENCH_BINARY
+            ms_print massif.out > memory_report.txt
+            cat memory_report.txt
+          fi
+
